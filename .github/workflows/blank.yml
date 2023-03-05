@@ -36,4 +36,4 @@ jobs:
           echo test, and deploy your project.
       # Call the custom action
       - name: custom action
-        uses: CustomAction/CustomAction@main
+        uses:  madhavirkl84/CustomAction@main
