@@ -27,15 +27,15 @@ jobs:
         with:
           script: |
             await github.issues.createComment({
-              owner: "github-hackathon",
-              repo: "hackathon",
+              owner: "madhavirkl84",
+              repo: "CustomActionTest",
               issue_number: context.payload.number,
               body: "Submission is not a usable GitHub Action"
             });
 
             await github.pulls.update({
-              owner: "github-hackathon",
-              repo: "hackathon",
+              owner: "madhavirkl84",
+              repo: "CustomActionTest",
               pull_number: context.payload.number,
               state: "closed"
             });
