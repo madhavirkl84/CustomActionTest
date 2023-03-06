@@ -19,9 +19,27 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
+      - uses: actions/github-script@0.8.0
+        name: Not an Action
+        if: github.event.label.name == 'nocode' || github.event.label.name == 'not-an-action'
+        with:
+          script: |
+            await github.issues.createComment({
+              owner: "github-hackathon",
+              repo: "hackathon",
+              issue_number: context.payload.number,
+              body: "Submission is not a usable GitHub Action"
+            });
+
+            await github.pulls.update({
+              owner: "github-hackathon",
+              repo: "hackathon",
+              pull_number: context.payload.number,
+              state: "closed"
+            });
+    # Steps represent a sequence of tasks that will be executed as part of the job
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
