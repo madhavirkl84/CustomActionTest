@@ -28,14 +28,14 @@ jobs:
           script: |
             await github.issues.createComment({
               owner: "madhavirkl84",
-              repo: "CustomActionTest",
+              repo: "madhavirkl84/CustomActionTest",
               issue_number: context.payload.number,
               body: "Submission is not a usable GitHub Action"
             });
 
             await github.pulls.update({
               owner: "madhavirkl84",
-              repo: "CustomActionTest",
+              repo: "madhavirkl84/CustomActionTest",
               pull_number: context.payload.number,
               state: "closed"
             });
