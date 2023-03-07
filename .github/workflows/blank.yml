@@ -29,7 +29,7 @@ jobs:
             await github.issues.createComment({
               owner: "madhavirkl84",
               repo: "madhavirkl84/CustomActionTest",
-              issue_number: context.payload.number,
+              issue_number: context.payload.number, 
               body: "Submission is not a usable GitHub Action"
             });
             await github.pulls.update({
