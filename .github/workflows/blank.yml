@@ -48,3 +48,4 @@ jobs:
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
         with: 
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
+          MY_TOKEN_2: ${{ secrets.GITHUB_TOKEN }}
