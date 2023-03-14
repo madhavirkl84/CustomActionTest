@@ -41,3 +41,5 @@ jobs:
       # Call the custom action
       - name: custom action
         uses:  madhavirkl84/CustomAction@main
+        with: 
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
