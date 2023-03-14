@@ -10,10 +10,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-  pull-requests: write
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -46,6 +42,6 @@ jobs:
       - name: custom action
         uses:  madhavirkl84/CustomAction@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_TOKEN: ${{ secrets.MY_TOKEN }}
         with: 
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          MY_TOKEN: ${{ secrets.MY_TOKEN }}
