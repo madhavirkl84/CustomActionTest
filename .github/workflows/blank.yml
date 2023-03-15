@@ -51,7 +51,7 @@ jobs:
 #        env:
 #          MY_TOKEN: ${{ secrets.MY_TOKEN }}
         with: 
-          my-token: ${{ secrets.MY_TOKEN }}
+          my-token: ${{ secrets.GITHUB_TOKEN }}
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
           MY_TOKEN_2: ${{ secrets.GITHUB_TOKEN }}
       - name: get the isBlockerExist status
