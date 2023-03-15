@@ -50,6 +50,7 @@ jobs:
         with: 
           my-token: ${{ secrets.MY_TOKEN }}
           my-token-2: ${{ secrets.GITHUB_TOKEN }}
+          pr-status: 'wf1'
       # store pr number for future use 
       - name: store pr number in env file
         run: |
