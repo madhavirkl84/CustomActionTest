@@ -23,9 +23,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: workflow called
+        uses: actions/checkout@v3
       - run: echo get payload ${{ github.event.client_payload.repository }} 
       - name: custom action
         id: customAction        
