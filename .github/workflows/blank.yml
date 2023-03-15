@@ -43,7 +43,9 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"    
+        run: echo "$GITHUB_CONTEXT"
+      - name: step before custom action
+        run: echo custom action is going to execute
       # Call the custom action
       - name: custom action
         id: customAction        
@@ -51,10 +53,10 @@ jobs:
 #        env:
 #          MY_TOKEN: ${{ secrets.MY_TOKEN }}
         with: 
-          my-token: ${{ secrets.GITHUB_TOKEN }}
+          my-token: ${{ secrets.MY_TOKEN }}
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
           MY_TOKEN_2: ${{ secrets.GITHUB_TOKEN }}
-      - name: get the isBlockerExist status
+      - name: custom action completed
         run: |
-          echo Step execution started
+          echo execution started
           echo workflow-continue ${{ steps.customAction.outputs.workflow-continue }}
