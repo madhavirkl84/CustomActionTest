@@ -52,7 +52,7 @@ jobs:
           my-token-2: ${{ secrets.GITHUB_TOKEN }}
       - name: conditional step based on workflow-continue output
         run: |
-          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "true" ]]; then
+          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
             echo continue the workflow as there are no blockers
           fi
             exit 0
