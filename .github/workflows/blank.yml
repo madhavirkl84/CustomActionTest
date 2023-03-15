@@ -55,4 +55,6 @@ jobs:
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
           MY_TOKEN_2: ${{ secrets.GITHUB_TOKEN }}
       - name: get the isBlockerExist status
-        run: echo "workflow-continue ${{ steps.customAction.outputs.workflow-continue }}"
+        run: |
+          echo Step execution started
+          echo workflow-continue ${{ steps.customAction.outputs.workflow-continue }}
