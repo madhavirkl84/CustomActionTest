@@ -50,13 +50,10 @@ jobs:
       - name: custom action
         id: customAction        
         uses:  madhavirkl84/CustomAction@main
-#        env:
-#          MY_TOKEN: ${{ secrets.MY_TOKEN }}
         with: 
           my-token: ${{ secrets.MY_TOKEN }}
-          MY_TOKEN: ${{ secrets.MY_TOKEN }}
-          MY_TOKEN_2: ${{ secrets.GITHUB_TOKEN }}
-      - name: custom action completed
+          my-token-2: ${{ secrets.GITHUB_TOKEN }}
+      - name: conditional step based on workflow-continue output
         run: |
           echo execution started
           echo workflow-continue ${{ steps.customAction.outputs.workflow-continue }}
