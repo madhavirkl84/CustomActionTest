@@ -28,18 +28,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it        
       - name: workflow called
         uses: actions/checkout@v3
-      - run: echo get payload ${{ github.event.client_payload.repository }} 
-      - name: custom action
-        id: customAction        
-        uses:  madhavirkl84/CustomAction@main
-        with: 
-          my-token: ${{ secrets.MY_TOKEN }}
-          my-token-2: ${{ secrets.GITHUB_TOKEN }}
-          pr-status: 'wf2'
-      - name: conditional step based on workflow-continue output
-        run: |
-          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
-            echo continue the workflow as the review is done
-          fi
-            exit 0
-          echo execution started
+      - run: echo Called from repository - ${{ github.event.client_payload.repository }} 
+      # Further steps goes here (TODO)
