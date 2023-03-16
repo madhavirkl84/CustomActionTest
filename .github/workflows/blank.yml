@@ -52,10 +52,10 @@ jobs:
           my-token-2: ${{ secrets.GITHUB_TOKEN }}
           pr-status: 'wf1'
       # store pr number for future use 
-      - name: store pr number in env file
-        run: |
-          touch .env
-          echo PR_NUMBER=${{ steps.customAction.outputs.pr-number }} >> .env
+#      - name: store pr number in env file
+#        run: |
+#          touch .env
+#          echo PR_NUMBER=${{ steps.customAction.outputs.pr-number }} >> .env
       - name: conditional step based on workflow-continue output
         run: |
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
