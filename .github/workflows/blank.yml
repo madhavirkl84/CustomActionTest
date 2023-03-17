@@ -57,11 +57,12 @@ jobs:
 #          touch .env
 #          echo PR_NUMBER=${{ steps.customAction.outputs.pr-number }} >> .env
       - name: conditional step based on workflow-continue output
+          environment:
+                  name: Dev
         run: |
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
             echo continue the workflow as there are no blockers
-            environment: 
-            name: Dev
+            
           fi
             exit 0
           echo execution started
