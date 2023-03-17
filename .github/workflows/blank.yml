@@ -60,7 +60,8 @@ jobs:
         run: |
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
             echo continue the workflow as there are no blockers
-            environment: Dev
+            environment: 
+            name: Dev
           fi
             exit 0
           echo execution started
