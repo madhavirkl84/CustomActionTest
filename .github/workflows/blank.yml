@@ -20,8 +20,8 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     permissions: write-all    
-#    outputs:
-#      continueWorkFlow: ${{ steps.customAction.outputs.test }}
+    outputs:
+      continueWorkFlow: ${{ steps.customAction.outputs.workflowContinue }}
 
     steps:
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -68,7 +68,7 @@ jobs:
           echo workflow-continue ${{ steps.customAction.outputs.workflow-continue }}
   DeployIntPreCheck:
     name: Deployment Pre Check 
-    if: \"${{ steps.conditionalStep.outputs.workflowContinue }}\" == "no"
+    if: \"${{needs.build.outputs.continueWorkFlow}}\" == "no"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
@@ -79,7 +79,7 @@ jobs:
         run: echo Pre check failed, please review to contiue the deploymnet
   DeployToInt:
     name: Int Deployment 
-    if: \"${{ steps.conditionalStep.outputs.workflowContinue }}\" == "no"
+    if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
