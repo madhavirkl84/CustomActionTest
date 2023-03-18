@@ -73,18 +73,18 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: PreDeployCheck
-      url: 'http://precheck.myapp.com'
+      url: 'http://precheck.com'
     steps:
       - name: PreCheck
         run: echo Pre check failed, please review to contiue the deploymnet
   DeployToInt:
     name: Int Deployment 
-    if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
+    # if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
       name: Int
-      url: 'http://int.myapp.com'
+      url: 'http://int.com'
     steps:
       - name: Deploy to Int Environment
         run: echo Pre check passed, let's deploy to Int     
