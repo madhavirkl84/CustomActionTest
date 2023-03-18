@@ -80,7 +80,7 @@ jobs:
   DeployToInt:
     name: Int Deployment 
     # if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
-    needs: [build]
+    needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
       name: Int
