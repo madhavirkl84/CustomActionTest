@@ -87,4 +87,4 @@ jobs:
       url: 'http://int.com'
     steps:
       - name: Deploy to Int Environment
-        run: echo Pre check passed, let's deploy to Int     
+        run: echo Pre check passed lets deploy to Int     
