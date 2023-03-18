@@ -68,7 +68,7 @@ jobs:
           echo workflow-continue ${{ steps.customAction.outputs.workflow-continue }}
   DeployIntPreCheck:
     name: Deployment Pre Check 
-    if: ${{ steps.conditionalStep.outputs.workflow-continue }} == 'no'
+    if: \"${{ steps.conditionalStep.outputs.workflow-continue }}\" == "no"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
@@ -79,7 +79,7 @@ jobs:
         run: echo Pre check failed, please review to contiue the deploymnet
   DeployToInt:
     name: Int Deployment 
-    if: ${{ steps.conditionalStep.outputs.workflow-continue }} == 'yes'
+    if: \"${{ steps.conditionalStep.outputs.workflow-continue }}\" == "no"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
