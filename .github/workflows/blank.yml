@@ -57,7 +57,7 @@ jobs:
 #          touch .env
 #          echo PR_NUMBER=${{ steps.customAction.outputs.pr-number }} >> .env
       - name: conditional step based on workflow-continue output
-      - id: conditionalStep
+        id: conditionalStep
         run: |
           echo "workflow-continue=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
