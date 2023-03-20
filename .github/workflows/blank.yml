@@ -72,12 +72,13 @@ jobs:
              echo "${{needs.build.outputs.continueWorkFlow}}"
   DeployToInt:
     name: Int Deployment 
-    if: needs.build.outputs.continueWorkFlow == 'yes'
-    needs: [build]
+    if: always()
+    needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
       name: Int
       #url: 'http://int.com'
     steps:
       - name: Deploy to Int Environment
+        if: ${{ needs.DeployIntPreCheck.result == 'success' }}
         run: echo Pre check passed lets deploy to Int     
