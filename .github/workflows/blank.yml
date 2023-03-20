@@ -70,7 +70,7 @@ jobs:
           echo "workflow-continue ${{ steps.customAction.outputs.workflow-continue }}"
   DeployIntPreCheck:
     name: Deployment Pre Check 
-    if: ${{needs.build.outputs.continueWorkFlow}} == no
+    if: \"${{needs.build.outputs.continueWorkFlow}}\" == "no"
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
