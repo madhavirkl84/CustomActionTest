@@ -80,5 +80,5 @@ jobs:
       #url: 'http://int.com'
     steps:
       - name: Deploy to Int Environment
-        if: ${{ needs.DeployIntPreCheck.result == 'success' }}
+        if: ${{ needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped' }}
         run: echo Pre check passed lets deploy to Int     
