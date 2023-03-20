@@ -73,7 +73,7 @@ jobs:
   DeployToInt:
     name: Int Deployment 
     if: needs.build.outputs.continueWorkFlow == 'yes'
-    needs: [DeployIntPreCheck]
+    needs: [build]
     runs-on: ubuntu-latest
     environment: 
       name: Int
