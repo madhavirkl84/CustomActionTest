@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: PreDeployCheck
-      url: 'http://precheck.com'
+#      url: 'http://precheck.com'
     steps:
       - name: PreCheck
         run: echo Pre check failed, please review to contiue the deploymnet
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: Int
-      url: 'http://int.com'
+#      url: 'http://int.com'
     steps:
       - name: Deploy to Int Environment
         run: echo Pre check passed lets deploy to Int     
