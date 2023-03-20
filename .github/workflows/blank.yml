@@ -79,7 +79,7 @@ jobs:
         run: echo Pre check failed, please review to contiue the deploymnet
   DeployToInt:
     name: Int Deployment 
-    # if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
+    if: \"${{needs.build.outputs.continueWorkFlow}}\" == "yes"
     needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
