@@ -50,11 +50,11 @@ jobs:
         run: |
           # echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
           echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
-          echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
-          echo "${{ steps.customAction.outputs.workflow-continue }}"
-          echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
+          # echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
+          # echo "${{ steps.customAction.outputs.workflow-continue }}"
+          # echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
           echo $GITHUB_OUTPUT 
-          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
+          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
             echo continue the workflow as there are no blockers
           fi
             exit 0
@@ -62,7 +62,7 @@ jobs:
           echo "workflow-continue ${{ steps.customAction.outputs.workflow-continue }}"
   DeployIntPreCheck:
     name: Deployment Pre Check 
-    if: needs.build.outputs.continueWorkFlow == 'no'
+    if: needs.build.outputs.continueWorkFlow == 'noGo'
     #if: github.event_name == 'pull_request'
     needs: [build]
     runs-on: ubuntu-latest
