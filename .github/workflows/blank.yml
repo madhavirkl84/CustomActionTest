@@ -48,13 +48,12 @@ jobs:
       - name: conditional step based on workflow-continue output
         id: conditionalStep
         run: |
-          echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
           echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
           echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
           # echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
           # echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
           # echo "${{ steps.customAction.outputs.workflow-continue }}"
-          # echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
+          echo "Blocker Details - ${{ steps.customAction.outputs.blockerDetails }}"
           # echo $GITHUB_OUTPUT 
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]] then
             echo continue the workflow as there are no blockers
