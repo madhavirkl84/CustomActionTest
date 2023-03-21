@@ -72,8 +72,8 @@ jobs:
     steps:
       - name: PreCheck
         run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
-            echo "Blockers ${{needs.build.outputs.blockerDetails}}"  
-             echo "${{needs.build.outputs.continueWorkFlow}}"
+           # echo "Blockers ${{needs.build.outputs.blockerDetails}}"  
+            # echo "${{needs.build.outputs.continueWorkFlow}}"
     environment: 
       name: PreDeployCheck
       #url: 'http://precheck.com'
