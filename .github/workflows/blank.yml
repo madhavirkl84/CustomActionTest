@@ -22,6 +22,7 @@ jobs:
     permissions: write-all    
     outputs:
       continueWorkFlow: ${{ steps.conditionalStep.outputs.continueWorkFlow }}
+      blockerDetails: ${{ steps.conditionalStep.outputs.blockerDetails }}
     steps:
     # Steps represent a sequence of tasks that will be executed as part of the job
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -49,6 +50,7 @@ jobs:
         run: |
           # echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
           echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
+          echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
           echo "${{ steps.customAction.outputs.workflow-continue }}"
           echo $GITHUB_OUTPUT 
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "yes" ]]; then
@@ -68,7 +70,8 @@ jobs:
       #url: 'http://precheck.com'
     steps:
       - name: PreCheck
-        run: echo Pre check failed, please review to contiue the deploymnet
+        run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
+            echo "Blockers ${{needs.build.outputs.blockerDetails}}"  
              echo "${{needs.build.outputs.continueWorkFlow}}"
   DeployToInt:
     name: Int Deployment 
