@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
           echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
-          #echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
+          echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
           #echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
           #echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
           # echo "${{ steps.customAction.outputs.workflow-continue }}"
