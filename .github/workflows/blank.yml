@@ -72,7 +72,7 @@ jobs:
              echo "${{needs.build.outputs.continueWorkFlow}}"
   DeployToInt:
     name: Int Deployment 
-    if: always()
+    if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
     needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
