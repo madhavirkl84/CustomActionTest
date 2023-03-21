@@ -52,8 +52,8 @@ jobs:
           echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
           echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
           echo "${{ steps.customAction.outputs.workflow-continue }}"
-          echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
-          echo $GITHUB_OUTPUT 
+          #echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
+          #echo $GITHUB_OUTPUT 
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
             echo continue the workflow as there are no blockers
           fi
