@@ -49,11 +49,12 @@ jobs:
         id: conditionalStep
         run: |
           echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
-          # echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
-          echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
-          echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
+          echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
+          #echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
+          #echo "::set-output name=continueWorkFlow::${{ steps.customAction.outputs.workflow-continue }}"
+          #echo "::set-output name=blockerDetails::${{ steps.customAction.outputs.blockerDetails }}"
           # echo "${{ steps.customAction.outputs.workflow-continue }}"
-          echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
+          #echo "Blockers ${{ steps.customAction.outputs.blockerDetails }}"
           # echo $GITHUB_OUTPUT 
           if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
             echo continue the workflow as there are no blockers
@@ -65,17 +66,11 @@ jobs:
     #if: github.event_name == 'pull_request'
     needs: [build]
     runs-on: ubuntu-latest
-    #environment: 
-     # name: PreDeployCheck
-      #url: 'http://precheck.com'
+    environment: 
+      name: PreDeployCheck
     steps:
       - name: PreCheck
         run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
-           # echo "Blockers ${{needs.build.outputs.blockerDetails}}"  
-            # echo "${{needs.build.outputs.continueWorkFlow}}"
-    environment: 
-      name: PreDeployCheck
-      #url: 'http://precheck.com'
   DeployToInt:
     name: Int Deployment 
     if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
