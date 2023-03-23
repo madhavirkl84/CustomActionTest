@@ -24,6 +24,7 @@ jobs:
           echo "Images build"
             
   checkBlockers:
+    needs: [build]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     permissions: write-all    
@@ -59,7 +60,7 @@ jobs:
         run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
   DeployToInt:
     name: Int Deployment 
-  #  if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
+    if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
     needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
