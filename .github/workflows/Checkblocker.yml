@@ -15,6 +15,18 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     permissions: write-all    
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: buildImages
+        run: |
+          echo "Images build"
+            
+  checkBlockers:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all    
     outputs:
       continueWorkFlow: ${{ steps.conditionalStep.outputs.continueWorkFlow }} # Job output to check the status
       blockerDetails: ${{ steps.conditionalStep.outputs.blockerDetails }}     # Job output for getting blocker details 
@@ -36,9 +48,9 @@ jobs:
           fi
             exit 0
   DeployIntPreCheck:
-    name: Deployment Pre Check 
-    if: needs.build.outputs.continueWorkFlow == 'noGo'
-    needs: [build]
+    name: Deployment Pre Check
+    needs: [checkBlockers]
+    if: needs.checkBlockers.outputs.continueWorkFlow == 'noGo'
     runs-on: ubuntu-latest
     environment: 
       name: PreDeployCheck
@@ -47,7 +59,7 @@ jobs:
         run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
   DeployToInt:
     name: Int Deployment 
-    if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
+  #  if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
     needs: [DeployIntPreCheck]
     runs-on: ubuntu-latest
     environment: 
