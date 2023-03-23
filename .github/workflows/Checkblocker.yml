@@ -1,0 +1,57 @@
+# Request for review when there are blockers 
+
+name: Check for Blockers
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all    
+    outputs:
+      continueWorkFlow: ${{ steps.conditionalStep.outputs.continueWorkFlow }} # Job output to check the status
+      blockerDetails: ${{ steps.conditionalStep.outputs.blockerDetails }}     # Job output for getting blocker details 
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: custom action
+        id: customAction        
+        uses:  madhavirkl84/CustomAction@main
+
+      - name: custom action check
+        id: conditionalStep
+        run: |
+          echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
+          echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
+          echo "Blocker Details - ${{ steps.customAction.outputs.blockerDetails }}"
+          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
+            echo continue the workflow as there are no blockers
+          fi
+            exit 0
+  DeployIntPreCheck:
+    name: Deployment Pre Check 
+    if: needs.build.outputs.continueWorkFlow == 'noGo'
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: PreDeployCheck
+    steps:
+      - name: PreCheck
+        run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
+  DeployToInt:
+    name: Int Deployment 
+    if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
+    needs: [DeployIntPreCheck]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Int
+    steps:
+      - name: Deploy to Int Environment
+        run: echo Pre check passed lets deploy to Int  
