@@ -34,20 +34,37 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: custom action
-        id: customAction        
-        uses:  madhavirkl84/CustomAction@main
+#      - name: custom action
+#        id: customAction        
+#        uses:  madhavirkl84/CustomAction@main
 
-      - name: custom action check
-        id: conditionalStep
+#      - name: custom action check
+#        id: conditionalStep
+#        run: |
+#          echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
+#          echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
+#          echo "Blocker Details - ${{ steps.customAction.outputs.blockerDetails }}"
+#          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
+#            echo continue the workflow as there are no blockers
+#          fi
+#            exit 0
+      - name: Check Blocker API Call
+        id: request
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://reqres.in/api/users'
+          method: 'GET'
+      - name: Map the output to Job variables
         run: |
-          echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
-          echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
-          echo "Blocker Details - ${{ steps.customAction.outputs.blockerDetails }}"
-          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
-            echo continue the workflow as there are no blockers
-          fi
-            exit 0
+          #echo ${{ steps.request.outputs.response }}
+          #echo ${{ steps.request.outputs.headers }}
+          #echo ${{ fromJson(steps.request.outputs.response).data[0].first_name }}
+          if ${{ fromJson(steps.request.outputs.response).data[0].first_name }} == 'George'
+            echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
+            echo "blockerDetails=${{ fromJson(steps.request.outputs.response).data[0] }}" >> $GITHUB_OUTPUT
+          else   
+            echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
+          fi  
   DeployIntPreCheck:
     name: Deployment Pre Check
     needs: [checkBlockers]
