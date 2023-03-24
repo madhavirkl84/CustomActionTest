@@ -20,7 +20,7 @@ jobs:
         #customHeaders: '{"Content-Type": "application/json"}'
         #data: '{"key_1": "value_1", "key_2": "value_2"}'
     - name: Show Response
-    run: |
-      echo ${{ steps.request.outputs.response }}
-      echo ${{ steps.request.outputs.headers }}
-      echo ${{ fromJson(steps.request.outputs.response).data }}    
+      run: |
+        echo ${{ steps.request.outputs.response }}
+        echo ${{ steps.request.outputs.headers }}
+        echo ${{ fromJson(steps.request.outputs.response).data }}    
