@@ -21,8 +21,7 @@ jobs:
       
       - name: buildImages
         run: |
-          echo "Images build"
-            
+          echo "Images build"            
   checkBlockers:
     needs: [build]
     # The type of runner that the job will run on
@@ -60,9 +59,9 @@ jobs:
           method: 'GET'
       - name: Map the output to Job variables
         run: |
-          if ${{ fromJson(steps.request.outputs.response).data[0].first_name }} == 'George'
+          if '${{ fromJson(steps.request.outputs.response).data[0].first_name }}' == 'George'
             echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
-            echo "blockerDetails=${{ toJson(steps.request.outputs.response).data[0] }}" >> $GITHUB_OUTPUT
+            echo "blockerDetails=${{ toJson(fromJson(steps.request.outputs.response).data[0]) }}" >> $GITHUB_OUTPUT
           else   
             echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
           fi  
