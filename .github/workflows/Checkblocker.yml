@@ -61,10 +61,9 @@ jobs:
       - name: Map the output to Job variables
         id: conditionalStep
         run: |          
-          if [['${{ fromJson(steps.request.outputs.response).data[0].first_name }}' == 'George']]; then
+          if [["${{ fromJson(steps.request.outputs.response).data[0].first_name }}" == "George"]]; then
             echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
             echo "${{needs.checkBlockers.outputs.continueWorkFlow}}"
-            echo needs.checkBlockers.outputs.continueWorkFlow            
           else
             echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
           fi  
