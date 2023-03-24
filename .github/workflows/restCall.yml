@@ -1,0 +1,19 @@
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy Stage
+      id: request
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://reqres.in/api/users'
+        method: 'GET'
+        #username: ${{ secrets.AWX_USER }}
+        #password: ${{ secrets.AWX_PASSWORD }}
+        #customHeaders: '{"Content-Type": "application/json"}'
+        #data: '{"key_1": "value_1", "key_2": "value_2"}'
+    - name: Show Response
+    run: |
+      echo ${{ steps.request.outputs.response }}
+      echo ${{ steps.request.outputs.headers }}
+      echo ${{ fromJson(steps.request.outputs.response).data }}    
