@@ -23,4 +23,4 @@ jobs:
       run: |
         echo ${{ steps.request.outputs.response }}
         echo ${{ steps.request.outputs.headers }}
-        echo ${{ fromJson(steps.request.outputs.response).data }}    
+        echo ${{ fromJson(steps.request.outputs.response).data[0].first_name }}    
