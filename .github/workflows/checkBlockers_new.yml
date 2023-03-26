@@ -30,7 +30,7 @@ jobs:
       continueWorkFlow: ${{ steps.request.outputs.continueWorkFlow }} # Job output to check the status
       blockerDetails: ${{ steps.request.outputs.blockerDetails }}     # Job output for getting blocker details 
     steps:
-      - uses: madhavirkl84/CustomActionTest/checkout@main
+      - uses: actions/checkout@2036a08e25fa78bbd946711a407b529a0a1204bf
       - name: Check Blocker API Call
         id: request
         uses: ./../actions/checkBlockers
