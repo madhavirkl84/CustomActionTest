@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Check Blocker API Call
         id: request
-        uses: ./.github/actions/checkBlockers
+        uses: ./actions/checkBlockers
 #      - name: Map the output to Job variables
 #        id: requestOutput
 #        run: |          
