@@ -1,0 +1,89 @@
+# Request for review when there are blockers 
+
+name: Check for Blockers
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all    
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: buildImages
+        run: |
+          echo "Images build"            
+  checkBlockers:
+    needs: [build]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all    
+    outputs:
+      continueWorkFlow: ${{ steps.conditionalStep.outputs.continueWorkFlow }} # Job output to check the status
+      blockerDetails: ${{ steps.conditionalStep.outputs.blockerDetails }}     # Job output for getting blocker details 
+    steps:
+      - uses: actions/checkout@v3
+      
+#      - name: custom action
+#        id: customAction        
+#        uses:  madhavirkl84/CustomAction@main
+
+#      - name: custom action check
+#        id: conditionalStep
+#        run: |
+#          echo "continueWorkFlow=${{ steps.customAction.outputs.workflow-continue }}" >> $GITHUB_OUTPUT
+#          echo "blockerDetails=${{ steps.customAction.outputs.blockerDetails }}" >> $GITHUB_OUTPUT
+#          echo "Blocker Details - ${{ steps.customAction.outputs.blockerDetails }}"
+#          if [[ "${{ steps.customAction.outputs.workflow-continue }}" == "Go" ]]; then
+#            echo continue the workflow as there are no blockers
+#          fi
+#            exit 0
+          # echo ${{ steps.request.outputs.response }}
+          # echo ${{ steps.request.outputs.headers }}
+          # echo ${{ fromJson(steps.request.outputs.response).data[0].first_name }}
+            # echo "blockerDetails=${{ toJson(fromJson(steps.request.outputs.response).data[0]) }}" >> $GITHUB_OUTPUT         
+
+      - name: Check Blocker API Call
+        id: request
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://reqres.in/api/users'
+          method: 'GET'
+      - name: Map the output to Job variables
+        id: conditionalStep
+        run: |          
+          if [[ "${{ fromJson(steps.request.outputs.response).data[0].first_name }}" != "George" ]]; then
+            echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
+            echo "${{needs.checkBlockers.outputs.continueWorkFlow}}"
+          else
+            echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
+          fi  
+  DeployIntPreCheck:
+    name: Deployment Pre Check
+    needs: [checkBlockers]
+    if: needs.checkBlockers.outputs.continueWorkFlow == 'noGo'
+    runs-on: ubuntu-latest
+    environment: 
+      name: PreDeployCheck
+    steps:
+      - name: PreCheck
+        run: echo Pre check failed, please review to contiue the deploymnet for following blockers 
+  DeployToInt:
+    name: Int Deployment 
+    if: always() && (needs.DeployIntPreCheck.result == 'success' || needs.DeployIntPreCheck.result == 'skipped')
+    needs: [DeployIntPreCheck]
+    runs-on: ubuntu-latest
+    environment: 
+      name: Int
+    steps:
+      - name: Deploy to Int Environment
+        run: echo Pre check passed lets deploy to Int  
