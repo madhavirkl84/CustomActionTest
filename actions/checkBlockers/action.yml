@@ -12,18 +12,18 @@ runs:
   using: "composite"
   steps:
     - name: Check Blocker API Call
-        id: request
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: 'https://reqres.in/api/users'
-          method: 'GET'
+      id: request
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://reqres.in/api/users'
+        method: 'GET'
     - name: Map the output to Job variables
-        id: conditionalStep
-        run: |          
-          if [[ "${{ fromJson(steps.request.outputs.response).data[0].first_name }}" != "George" ]]; then
-            echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
-            echo "blockerDetails=${{needs.checkBlockers.outputs.continueWorkFlow}}" >> $GITHUB_OUTPUT
-          else
-            echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
-            echo "blockerDetails= " >> $GITHUB_OUTPUT
-          fi  
+      id: conditionalStep
+      run: |          
+        if [[ "${{ fromJson(steps.request.outputs.response).data[0].first_name }}" != "George" ]]; then
+          echo "continueWorkFlow=noGo" >> $GITHUB_OUTPUT
+          echo "blockerDetails=${{needs.checkBlockers.outputs.continueWorkFlow}}" >> $GITHUB_OUTPUT
+        else
+          echo "continueWorkFlow=Go" >> $GITHUB_OUTPUT
+          echo "blockerDetails= " >> $GITHUB_OUTPUT
+        fi  
