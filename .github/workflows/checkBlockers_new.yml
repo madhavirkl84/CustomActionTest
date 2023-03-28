@@ -31,9 +31,9 @@ jobs:
       blockerDetails: ${{ steps.request.outputs.blockerDetails }}     # Job output for getting blocker details 
     steps:
       - uses: actions/checkout@v2
+      - uses: ./../actions/checkBlockers
       - name: Check Blocker API Call
         id: request
-        uses: ./../actions/checkBlockers
 #      - name: Map the output to Job variables
 #        id: requestOutput
 #        run: |          
