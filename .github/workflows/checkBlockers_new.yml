@@ -11,18 +11,18 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    permissions: write-all        
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: buildImages
-        run: |
-          echo "Images build"            
+#  build:
+##    # The type of runner that the job will run on
+ #   runs-on: ubuntu-latest
+ #   permissions: write-all        
+ #   steps:
+ #     - uses: actions/checkout@v3
+ #     
+ #     - name: buildImages
+ #       run: |
+ #         echo "Images build"            
   checkBlockers:
-    needs: [build]
+#    needs: [build]
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     permissions: write-all    
@@ -30,10 +30,12 @@ jobs:
       continueWorkFlow: ${{ steps.request.outputs.continueWorkFlow }} # Job output to check the status
       blockerDetails: ${{ steps.request.outputs.blockerDetails }}     # Job output for getting blocker details 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./../actions/checkBlockers
+      - name: Checkout this repo
+        uses: actions/checkout@v2
       - name: Check Blocker API Call
         id: request
+        uses: ./../actions/checkBlockers
+        
 #      - name: Map the output to Job variables
 #        id: requestOutput
 #        run: |          
